@@ -3,3 +3,6 @@
 
 # Ignore env folder
 env/
+
+# Ignore URL list
+/URL.txt
