@@ -1,2 +1,5 @@
 # Ignore every mp3 file
 *.mp3
+
+# Ignore env folder
+env/
