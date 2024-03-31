@@ -1,5 +1,5 @@
 .PHONY : clean
 
 clean:
-	rm -f *.mp3
-	rm -f *.mp4
+	find . -type f -name '*.mp3' -delete
+	find . -type f -name '*.mp4' -delete

@@ -26,8 +26,7 @@ def download_video(url:str, path:str):
         print(BLUE + "Dowloading " + WHITE + video.title)
         output_file = video.download(output_path=path)
         output_file = output_file.replace("\\", "/")
-        command = "ffmpeg -i {} -vn -ar 44100 -ac 2 -b:a 192k {}".format(output_file, output_file[:-4] + ".mp3")
-        subprocess.run([command])
+        ffmpeg.input(output_file).output(output_file.replace(".mp4", ".mp3"), loglevel="quiet").run()
         os.remove(output_file)
         print(GREEN + video.title + WHITE + " downloaded successfully\n")
     except Exception as e:
