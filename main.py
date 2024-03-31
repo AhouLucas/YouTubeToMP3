@@ -27,7 +27,7 @@ def download_video(url:str, path:str):
         base, ext = os.path.splitext(output_file)
         new_file = base + '.mp3'
         os.rename(output_file, new_file)
-        print(GREEN + "Downloaded " + WHITE + audio.title + "\n")
+        print(GREEN + f"{audio.title}" + WHITE + " has been succesfully downloaded.\n")
     except Exception as e:
         print(RED + "Error downloading " + WHITE + url + "\n")
 
@@ -43,25 +43,10 @@ def URL_from_txt(path:str)->list:
     """
     lst = []
     with open(path, 'r') as f:
-        for line in f:
-            lst.append(line)
+        lines = f.readlines()
+        for line in lines:
+            lst.append(line.strip())
     return lst
-
-def progress_bar(percentage:int)->str:
-    """Create a progress bar
-
-    Args:
-        percentage (int): Percentage of the progress
-
-    Returns:
-        str: Progress bar
-    """
-    size = 25
-    bar = "["
-    bar += "=" * int(percentage/100 * size)
-    bar += " " * (size - int(percentage/100 * size))
-    bar += "]"
-    return bar
 
 
 if __name__ == "__main__":
@@ -73,8 +58,8 @@ if __name__ == "__main__":
     num_urls = len(urls)
     num_downloaded = 0
     for url in urls:
+        print(GREEN + f"[{num_downloaded+1}/{num_urls}] Downloading...\n" + WHITE)
         download_video(url, path)
         num_downloaded += 1
-        print(progress_bar(num_downloaded/num_urls * 100) + " " + str(num_downloaded/num_urls * 100) + "%" + "\n")
     
     print("Download completed")
