@@ -1,5 +1,6 @@
-# Ignore every mp3 file
+# Ignore every mp3/mp4 file
 *.mp3
+*.mp4
 
 # Ignore env folder
 env/

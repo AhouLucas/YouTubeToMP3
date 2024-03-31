@@ -3,6 +3,8 @@ import tkinter as tk
 from tkinter import filedialog  
 from tkinter import ttk
 import os
+import subprocess
+import ffmpeg
 from colorama import Fore, Style, init
 
 # Colorama
@@ -20,16 +22,16 @@ def download_video(url:str, path:str):
     """
     try:
         yt = YouTube(url)
-        audio = yt.streams.filter(only_audio=True).first()
-        print(BLUE + "Dowloading " + WHITE + audio.title)
-        output_file = audio.download(output_path=path)
-
-        base, ext = os.path.splitext(output_file)
-        new_file = base + '.mp3'
-        os.rename(output_file, new_file)
-        print(GREEN + f"{audio.title}" + WHITE + " has been succesfully downloaded.\n")
+        video = yt.streams.first()
+        print(BLUE + "Dowloading " + WHITE + video.title)
+        output_file = video.download(output_path=path)
+        output_file = output_file.replace("\\", "/")
+        command = "ffmpeg -i {} -vn -ar 44100 -ac 2 -b:a 192k {}".format(output_file, output_file[:-4] + ".mp3")
+        subprocess.run([command])
+        os.remove(output_file)
+        print(GREEN + video.title + WHITE + " downloaded successfully\n")
     except Exception as e:
-        print(RED + "Error downloading " + WHITE + url + "\n")
+        print(RED + "Error: " + WHITE + str(e) + "\n")
 
 
 def URL_from_txt(path:str)->list:
