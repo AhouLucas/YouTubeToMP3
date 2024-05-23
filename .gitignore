@@ -6,4 +6,5 @@
 env/
 
 # Ignore URL list
-URL.txt
+*.txt
+!requirements.txt
