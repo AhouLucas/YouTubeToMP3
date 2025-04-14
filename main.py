@@ -1,4 +1,3 @@
-from pytube import YouTube
 import tkinter as tk
 from tkinter import filedialog  
 from tkinter import ttk
@@ -21,16 +20,19 @@ def download_video(url:str, path:str):
         path (str): Path to save the video
     """
     try:
-        yt = YouTube(url)
-        video = yt.streams.first()
-        print(BLUE + "Dowloading " + WHITE + video.title)
-        output_file = video.download(output_path=path)
-        output_file = output_file.replace("\\", "/")
-        ffmpeg.input(output_file).output(output_file.replace(".mp4", ".mp3"), loglevel="quiet").run()
-        os.remove(output_file)
-        print(GREEN + video.title + WHITE + " downloaded successfully\n")
+        print("="*50)
+        # Fetch video title
+        title = subprocess.run(['yt-dlp', '--get-title', url], capture_output=True, text=True).stdout.strip()
+        print(BLUE + "Dowloading " + WHITE + title)
+        
+        # Download video
+        subprocess.run(['yt-dlp', '-x', '--audio-format', 'mp3', url, '-o', f'{path}/%(title)s.%(ext)s'])
+
+        print(GREEN + title + WHITE + " downloaded successfully")
+        print("="*50)
     except Exception as e:
         print(RED + "Error: " + WHITE + str(e) + "\n")
+        print("="*50)
 
 
 def URL_from_txt(path:str)->list:
