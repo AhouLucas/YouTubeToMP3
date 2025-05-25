@@ -51,6 +51,16 @@ def URL_from_txt(path:str)->list:
             lst.append(line.strip())
     return lst
 
+def remove_duplicate_urls(lst:list)->list:
+    """Remove duplicate URLs from a list
+
+    Args:
+        lst (list): List of URLs
+
+    Returns:
+        list: List of unique URLs
+    """
+    return list(set(lst))
 
 if __name__ == "__main__":
     root = tk.Tk()
@@ -58,6 +68,7 @@ if __name__ == "__main__":
     file_path = filedialog.askopenfilename()
     path = filedialog.askdirectory()
     urls = URL_from_txt(file_path)
+    urls = remove_duplicate_urls(urls)
     num_urls = len(urls)
     num_downloaded = 0
     for url in urls:
