@@ -26,7 +26,7 @@ def download_video(url:str, path:str):
         print(BLUE + "Dowloading " + WHITE + title)
         
         # Download video
-        subprocess.run(['yt-dlp', '-x', '--audio-format', 'mp3', url, '-o', f'{path}/%(title)s.%(ext)s'])
+        subprocess.run(['yt-dlp', '--no-playlist', '-x', '--audio-format', 'mp3', url, '-o', f'{path}/%(title)s.%(ext)s'])
 
         print(GREEN + title + WHITE + " downloaded successfully")
         print("="*50)
